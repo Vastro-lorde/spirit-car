@@ -4,10 +4,12 @@ class Controls {
         this.backward = false;
         this.left = false;
         this.right = false;
+        this.active = true;
         this.#keyboardListeners();
     }
     
     #keyboardListeners(){
+
         document.onkeydown = (event) => {
             switch (event.key) {
                 case 'ArrowUp':
