@@ -23,6 +23,7 @@ class Controls {
                     break;
                 case 'ArrowRight':
                     this.right = true;
+                    break;
             }
             console.clear()
             console.table(this)

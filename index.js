@@ -3,7 +3,7 @@ canvas.width = 500;
 
 
 const ctx = canvas.getContext('2d');
-const car = new Car(250, 250, 60, 100);
+const car = new Car({x: 250, y: 250, width: 60, height: 100, color: "blue"});
 car.drawCar(ctx);
 
 render()

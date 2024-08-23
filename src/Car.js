@@ -1,5 +1,5 @@
 class Car {
-    constructor(x, y, width, height) {
+    constructor({x, y, width, height, color}) {
         this.x = x;
         this.y = y;
         this.angle = 0;
@@ -12,9 +12,14 @@ class Car {
         this.frontTires = [];
         this.backTires = [];
         this.controls = new Controls();
+        this.color = color
     }
 
     update(){
+        this.#move()
+    }
+
+    #move(){
         if (this.controls.forward) {
             this.speed += this.acceleration;
         }
@@ -66,6 +71,7 @@ class Car {
 
     drawCar(ctx){
         ctx.save();
+        
         ctx.beginPath();
         ctx.translate(this.x, this.y)
         ctx.rotate(-this.angle)
@@ -75,17 +81,17 @@ class Car {
             this.width,
             this.height
         );
-        ctx.fillStyle = 'red';
+        ctx.fillStyle = this.color;
         ctx.fill();
 
         ctx.beginPath()
         ctx.rect(
-            -this.width / 4,
-            -this.height / 8,
-            this.width / 3,
+            -this.width / 3.1,
+            -this.height / 1.6,
+            this.width / 1.6,
             this.height / 3
         );
-        ctx.fillStyle = '000';
+        ctx.fillStyle = this.color;
         ctx.fill();
             
             
@@ -104,6 +110,8 @@ class Car {
         
         this.backTires.push(tire3);
         this.backTires.push(tire4);
+
+        
         
         ctx.restore()
     }
