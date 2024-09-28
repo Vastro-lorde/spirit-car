@@ -1,16 +1,32 @@
 const canvas = document.getElementById('canvas');
-canvas.width = 500;
+canvas.width = window.innerWidth  > 640 ? window.innerWidth / 2 : window.innerWidth ;
 
 
 const ctx = canvas.getContext('2d');
-const car = new Car({x: 250, y: 250, width: 60, height: 100, color: "blue"});
+const road = new Road({x: canvas.width / 2, width: canvas.width, lanes: 4, edgeMargin: 0.95, lineWidth: 10});
+const car = new Car({x: road.getLaneCenter(0), y: window.innerHeight / 1 - 100, width: 60, height: 100, color: "blue"});
 car.drawCar(ctx);
 
 render()
 
+/**
+ * The main game loop. This function is called once to start the game and then
+ * repeatedly called by requestAnimationFrame to keep the game running.
+ *
+ * This function will:
+ * - Update the car's position based on user input.
+ * - Set the canvas height to the window's height.
+ * - Draw the road, then the car.
+ * - Request the next frame from the browser.
+ */
 function render() {
     car.update();
     canvas.height = window.innerHeight;
+    ctx.save()
+    ctx.translate(0, -car.y + (window.innerHeight * 0.7)) // 
+    road.draw(ctx);
     car.drawCar(ctx);
+
+    ctx.restore()
     requestAnimationFrame(render);
 }

@@ -3,16 +3,18 @@ class Car {
         this.x = x;
         this.y = y;
         this.angle = 0;
+        this.tireAngle = this.angle
         this.width = width;
         this.height = height; 
         this.speed = 0;
-        this.maxSpeed = 4;
+        this.maxSpeed = 6;
         this.friction = 0.05;
-        this.acceleration = 0.2;
-        this.frontTires = [];
-        this.backTires = [];
+        this.acceleration = 0.1;
+        this.handling = 0.01;
+        
         this.controls = new Controls();
         this.color = color
+        
     }
 
     update(){
@@ -24,7 +26,7 @@ class Car {
             this.speed += this.acceleration;
         }
         if (this.controls.backward) {
-            this.speed -= this.acceleration;
+            this.speed -= this.acceleration * 2;
         }
         if (this.speed > this.maxSpeed) {
             this.speed = this.maxSpeed;
@@ -42,35 +44,43 @@ class Car {
             this.speed = 0;
         }
         if (this.controls.left) {
-            if (this.speed === 0) {
-                for (const tire of this.frontTires) {
-                    // tire.controls.active === true;
-                    tire.turn(0.03, 'left');
-                }
-            }
+            // if (this.speed === 0) {
+            //     for (const tire of this.frontTires) {
+            //         // tire.controls.active === true;
+            //         tire.turn(this.angle, 'left');
+            //     }
+            // }
             if (this.speed != 0){
-                this.angle += 0.03;
+                this.angle += this.handling;
             }
+            this.tireAngle += this.angle;
         }
         if (this.controls.right) {
-            if (this.speed === 0) {
-                for (const tire of this.frontTires) {
-                    // tire.controls.active === true;
-                    tire.turn(0.03, 'rigth');
-                }
-            }
+            // if (this.speed === 0) {
+            //     for (const tire of this.frontTires) {
+            //         // tire.controls.active === true;
+            //         tire.turn(this.angle, 'rigth');
+            //     }
+            // }
             if (this.speed != 0){
-                this.angle -= 0.03;
+                this.angle -= this.handling;
             }
+            this.tireAngle -= this.angle;
         }
 
         
         this.x -= Math.sin(this.angle) * this.speed;
         this.y -= Math.cos(this.angle) * this.speed;
+        
     }
 
     drawCar(ctx){
         ctx.save();
+        
+        const tire = new Tire({x: this.x, y: this.y, width: 20, height: 40, carAngle: this.tireAngle, position: 1});
+        const tire2 = new Tire({x: this.x, y: this.y, width: 20, height: 40, carAngle: this.tireAngle, position: 2});
+        const tire4 = new Tire({x: this.x, y: this.y, width: 20, height: 40, carAngle: this.angle, position: 3});
+        const tire3 = new Tire({x: this.x, y: this.y, width: 20, height: 40, carAngle: this.angle, position: 4});
         
         ctx.beginPath();
         ctx.translate(this.x, this.y)
@@ -94,22 +104,20 @@ class Car {
         ctx.fillStyle = this.color;
         ctx.fill();
             
-            
-        const tire = new Tire(this.x, this.y, 20, 40, this.angle, 1);
-        const tire2 = new Tire(this.x, this.y, 20, 40, this.angle, 2);
-        const tire4 = new Tire(this.x, this.y, 20, 40, this.angle, 3);
-        const tire3 = new Tire(this.x, this.y, 20, 40, this.angle, 4);
+        tire.draw(ctx, this)
+        tire2.draw(ctx, this)
+        tire3.draw(ctx, this)
+        tire4.draw(ctx, this)
+        this.frontTires = [tire, tire2];
+        this.backTires = [tire3, tire4];
 
         
-        tire.draw(ctx, this);
-        tire2.draw(ctx, this);
-        tire3.draw(ctx, this);
-        tire4.draw(ctx, this);
-        this.frontTires.push(tire);
-        this.frontTires.push(tire2);
-        
-        this.backTires.push(tire3);
-        this.backTires.push(tire4);
+        // this.frontTires.forEach((frontTire)=>{
+        //     frontTire.draw(ctx, this);
+        // })
+        // this.backTires.forEach((backTire)=>{
+        //     backTire.draw(ctx, this);
+        // })
 
         
         
