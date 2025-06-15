@@ -10,3 +10,8 @@ body {
 #canvas {
     background-color: gray;
 }
+
+.container {
+    display: flex;
+    align-items: end;
+}

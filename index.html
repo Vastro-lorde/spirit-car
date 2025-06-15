@@ -11,8 +11,17 @@
     <meta name="keywords" content="Javascript|car|canvas|html">
 </head>
 <body>
-    <canvas id="canvas"></canvas>
+    <div class="container">
+        <canvas id="canvas"></canvas>
+        <div id="controls-btns-container">
+            <button id="forward" class="control-btns">forward</button>
+            <button id="left" class="control-btns">left</button>
+            <button id="right" class="control-btns">right</button>
+            <button id="backward" class="control-btns">backward</button>
+        </div>
+    </div>
     <script src="./src/utils.js"></script>
+    <script src="./src/Sensors.js"></script>
     <script src="./src/Road.js"></script>
     <script src="./src/Tire.js"></script>
     <script src="./src/Controls.js"></script>
