@@ -115,11 +115,12 @@ class Car {
 
         // --- bonet ----//
         ctx.beginPath()
-        ctx.rect(
+        ctx.roundRect(
             -this.width / 2.5,
-            -this.height / 1.7,
+            -this.height / 1.6,
             this.width / 1.2,
-            this.height / 3
+            this.height / 4,
+            4
         );
         ctx.fillStyle = this.color;
         ctx.fill();
@@ -147,7 +148,7 @@ class Car {
             -this.width / 2.4,
             -this.height / 2,
             this.width / 1.2,
-            this.height / 4.5
+            this.height / 6.5
         );
         ctx.fillStyle = 'black';
         ctx.fill();
@@ -157,9 +158,9 @@ class Car {
         ctx.beginPath()
         ctx.rect(
             -this.width / 2.4,
-            this.height / 6,
+            this.height / 3.5,
             this.width / 1.2,
-            this.height / 4.5
+            this.height / 6.5
         );
         ctx.fillStyle = 'black';
         ctx.fill();
